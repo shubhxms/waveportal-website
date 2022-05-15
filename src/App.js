@@ -45,8 +45,23 @@ export default function App() {
   }
 
 
-  const wave = () => {
-    
+  const wave = async () => {
+    try{
+      const {ethereum} = window;
+
+      if(ethereum){
+        const provider = new ethers.providers.Web3Provider(ethereum);
+        const signer = provider.getSigner();
+        const InfPortalContract = new ethers.Contract(contractAddress, contractABI, signer);
+
+        let count = await InfPortalContract.getTotalInf();
+        console.log("total infinities rcvd so far: ", count);
+      }else{
+        console.log("ethereum object DNE");
+      }
+    }catch(error){
+      console.log(error);
+    }
   }
   
   useEffect(() => {
