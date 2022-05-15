@@ -1,13 +1,26 @@
-import * as React from "react";
+import React, {useEffect} from "react";
 import { ethers } from "ethers";
 import './App.css';
 
 export default function App() {
 
+  const checkIfWalletConnected = () => {
+    const {ethereum} = window;
+    if(!ethereum){
+      console.log("ensure that you have a wallet installed");
+    }else{
+      console.log("ethereum object is here!");
+    }
+  }
+
   const wave = () => {
     
   }
   
+  useEffect(() => {
+    checkIfWalletConnected();
+  }, []);
+
   return (
     <div className="mainContainer">
 
