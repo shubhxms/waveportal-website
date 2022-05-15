@@ -6,7 +6,7 @@ export default function App() {
 
   const [currentAccount, setCurrentAccount] = useState("");
   
-  const checkIfWalletConnected = () => {
+  const checkIfWalletConnected = async () => {
     try{
       const {ethereum} = window;
       if(!ethereum){
