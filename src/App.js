@@ -72,7 +72,7 @@ export default function App() {
         count = await InfPortalContract.getTotalInf();
         console.log("Retrieved total inf count", count.toNumber());
 
-        let addA, infA;
+        // let addA, infA;
         [addArr, infArr] = InfPortalContract.getData();
 
 
@@ -101,9 +101,10 @@ export default function App() {
         ∞∞∞ I am shubham and I am pretty cool. Connect your Ethereum wallet and send infinities at me! we are, after all, at the  beginning of infinity ∞∞∞
         </div>
 
+        {count &&
         <div className="bio">
           {count} infinities received so far
-        </div>
+        </div>}
       
         <button className="waveButton" onClick={wave}>
           send infinities ∞
@@ -114,12 +115,13 @@ export default function App() {
           </button>
         )}
       </div>
-
+      
+      {addArr && infArr &&
       <div className="txHistory">
            {addArr.forEach(add => <div className="bio">
                 {add} has sent {infArr[addArr.indexOf(add)]} infinities
              </div>)}
-      </div>
+      </div>}
       
     </div>
   );
