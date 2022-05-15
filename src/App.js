@@ -1,10 +1,14 @@
 import React, {useState, useEffect} from "react";
 import { ethers } from "ethers";
 import './App.css';
+import abi from "./utils/InfPortal.json"
 
 export default function App() {
 
   const [currentAccount, setCurrentAccount] = useState("");
+  const contractAddress = "0x7fC64f4f9D05231f965a59e060FD88dae5B4Db10";
+  const contractABI = abi.abi;
+
   
   const checkIfWalletConnected = async () => {
     try{
@@ -56,6 +60,19 @@ export default function App() {
 
         let count = await InfPortalContract.getTotalInf();
         console.log("total infinities rcvd so far: ", count);
+
+        const infTxn = await InfPortalContract.wave();
+        console.log("mining", infTxn.hash);
+
+        await infTxn.wait();
+        console.log("mined -- ", infTxn.hash);
+
+        count = await InfPortalContract.getTotalInf();
+        console.log("Retrieved total inf count", count.toNumber());
+        
+
+
+        
       }else{
         console.log("ethereum object DNE");
       }
