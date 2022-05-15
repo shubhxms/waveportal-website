@@ -6,6 +6,8 @@ import abi from "./utils/InfPortal.json"
 export default function App() {
 
   const [currentAccount, setCurrentAccount] = useState("");
+  const [addArr, setAddArr] = useState([]);
+  const [infArr, setInfArr] = useState([]);
   const contractAddress = "0x7fC64f4f9D05231f965a59e060FD88dae5B4Db10";
   const contractABI = abi.abi;
 
@@ -70,6 +72,8 @@ export default function App() {
         count = await InfPortalContract.getTotalInf();
         console.log("Retrieved total inf count", count.toNumber());
 
+        let addA, infA;
+        [addArr, infArr] = InfPortalContract.getData();
 
 
         
@@ -97,6 +101,10 @@ export default function App() {
         ∞∞∞ I am shubham and I am pretty cool. Connect your Ethereum wallet and send infinities at me! we are, after all, at the  beginning of infinity ∞∞∞
         </div>
 
+        <div className="bio">
+          {count} infinities received so far
+        </div>
+      
         <button className="waveButton" onClick={wave}>
           send infinities ∞
         </button>
@@ -106,6 +114,13 @@ export default function App() {
           </button>
         )}
       </div>
+
+      <div className="txHistory">
+           {addArr.forEach(add => <div className="bio">
+                {add} has sent {infArr[addArr.indexOf(add)]} infinities
+             </div>)}
+      </div>
+      
     </div>
   );
 }
