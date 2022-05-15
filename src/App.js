@@ -73,7 +73,7 @@ export default function App() {
         console.log("Retrieved total inf count", count.toNumber());
 
         let addA, infA;
-        ({addA, infA} = InfPortalContract.getData());
+        ({addA, infA} = await InfPortalContract.getData());
         setAddArr(addA);
         setInfArr(infA);
 
@@ -90,6 +90,8 @@ export default function App() {
   useEffect(() => {
     checkIfWalletConnected();
   }, []);
+
+  
 
   return (
     <div className="mainContainer">
