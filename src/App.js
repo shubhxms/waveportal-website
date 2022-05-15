@@ -61,7 +61,7 @@ export default function App() {
         let count = await InfPortalContract.getTotalInf();
         console.log("total infinities rcvd so far: ", count);
 
-        const infTxn = await InfPortalContract.wave();
+        const infTxn = await InfPortalContract.inf();
         console.log("mining", infTxn.hash);
 
         await infTxn.wait();
@@ -69,7 +69,7 @@ export default function App() {
 
         count = await InfPortalContract.getTotalInf();
         console.log("Retrieved total inf count", count.toNumber());
-        
+
 
 
         
