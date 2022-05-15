@@ -10,7 +10,7 @@ export default function App() {
   const [infArr, setInfArr] = useState([]);
   const contractAddress = "0x7fC64f4f9D05231f965a59e060FD88dae5B4Db10";
   const contractABI = abi.abi;
-
+  let count;
   
   const checkIfWalletConnected = async () => {
     try{
@@ -60,7 +60,7 @@ export default function App() {
         const signer = provider.getSigner();
         const InfPortalContract = new ethers.Contract(contractAddress, contractABI, signer);
 
-        let count = await InfPortalContract.getTotalInf();
+        count = await InfPortalContract.getTotalInf();
         console.log("total infinities rcvd so far: ", count);
 
         const infTxn = await InfPortalContract.inf();
