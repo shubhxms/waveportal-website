@@ -6,10 +6,12 @@ import abi from "./utils/InfPortal.json"
 export default function App() {
 
   const [currentAccount, setCurrentAccount] = useState("");
-  const [addArr, setAddArr] = useState([]);
-  const [infArr, setInfArr] = useState([]);
+  const [msg, setMsg] = useState('');
+  // const [addArr, setAddArr] = useState([]);
+  // const [infArr, setInfArr] = useState([]);
   const [count, setCount] = useState(0);
-  const contractAddress = "0x61330a4923C0863b1a3c15F509C63EAf6FB05e75";
+  const [allWaves, setAllWaves] = useState([]);
+  const contractAddress = "0x885A82AE5a29fa553f975bBC7604c0706cC32C80";
   const contractABI = abi.abi;
   
 
@@ -27,6 +29,7 @@ export default function App() {
         const account = accounts[0];
         console.log("Found an authorized account");
         setCurrentAccount(account);
+        getAllWaves();
       }else{
         console.log("no authorized account found");
       }
@@ -66,7 +69,7 @@ export default function App() {
         setCount(parseInt(tempCount["_hex"]));
         console.log("total infinities rcvd so far: ", count);
 
-        const infTxn = await InfPortalContract.inf();
+        const infTxn = await InfPortalContract.inf("this is a message");
         console.log("mining", infTxn.hash);
 
         await infTxn.wait();
@@ -96,45 +99,70 @@ export default function App() {
     checkIfWalletConnected();
   }, []);
 
-
-  const updateData = async () => {
+  const getAllWaves = async () => {
     try{
       const {ethereum} = window;
-
       if(ethereum){
         const provider = new ethers.providers.Web3Provider(ethereum);
         const signer = provider.getSigner();
         const InfPortalContract = new ethers.Contract(contractAddress, contractABI, signer);
-
-        let tempCount;
-        tempCount = await InfPortalContract.getTotalInf();
-        setCount(parseInt(tempCount["_hex"]));
-        console.log("Retrieved total inf count", count);
-
-        console.log("count: ",count);
-        let dataArr;
-        dataArr = await InfPortalContract.getData();
-        console.log(dataArr);
-        setAddArr(dataArr[0]);
-        let tempInfArr = [];
-        for(let i = 0; i< dataArr[1].length; i++){
-          console.log(dataArr[1]);
-          console.log(dataArr[1][i]);
-          console.log(parseInt(dataArr[1][i]["_hex"]));
-          tempInfArr.push(parseInt(dataArr[1][i]["_hex"]));
-          console.log(tempInfArr);
-        }
-        console.log(tempInfArr)
-        setInfArr(tempInfArr);
-
+        const waves = await InfPortalContract.getAllWaves();
+        console.log(waves);
+        let wavesCleaned = [];
+        waves.forEach(wave => {
+          wavesCleaned.push({
+            address: wave.water,
+            timestamp: new Date(wave.timestamp * 1000),
+            message: wave.message
+          });
+        });
+        setAllWaves(wavesCleaned);
       }else{
         console.log("ethereum obj DNE");
       }
-      
     }catch(error){
       console.log(error);
     }
   }
+
+  // const updateData = async () => {
+  //   try{
+  //     const {ethereum} = window;
+
+  //     if(ethereum){
+  //       const provider = new ethers.providers.Web3Provider(ethereum);
+  //       const signer = provider.getSigner();
+  //       const InfPortalContract = new ethers.Contract(contractAddress, contractABI, signer);
+
+  //       let tempCount;
+  //       tempCount = await InfPortalContract.getTotalInf();
+  //       setCount(parseInt(tempCount["_hex"]));
+  //       console.log("Retrieved total inf count", count);
+
+  //       console.log("count: ",count);
+  //       let dataArr;
+  //       dataArr = await InfPortalContract.getData();
+  //       console.log(dataArr);
+  //       setAddArr(dataArr[0]);
+  //       let tempInfArr = [];
+  //       for(let i = 0; i< dataArr[1].length; i++){
+  //         console.log(dataArr[1]);
+  //         console.log(dataArr[1][i]);
+  //         console.log(parseInt(dataArr[1][i]["_hex"]));
+  //         tempInfArr.push(parseInt(dataArr[1][i]["_hex"]));
+  //         console.log(tempInfArr);
+  //       }
+  //       console.log(tempInfArr)
+  //       setInfArr(tempInfArr);
+
+  //     }else{
+  //       console.log("ethereum obj DNE");
+  //     }
+      
+  //   }catch(error){
+  //     console.log(error);
+  //   }
+  // }
   
   if(count === 0 && addArr.length === 0){
     updateData();
@@ -156,8 +184,17 @@ export default function App() {
         <div className="bio">
           {count} infinities received so far
         </div>
-      
-        <button className="waveButton" onClick={wave}>
+
+        <input
+          type='text'
+          id='msg'
+          value={msg}
+          onChange={e => setMsg(e.target.value)}
+        />
+
+        <button className="waveButton" onClick={() =>
+        msg !== '' ?
+          alert("please add some message") : wave(msg)}>
           send infinities ∞
         </button>
         {!currentAccount && (
@@ -166,13 +203,13 @@ export default function App() {
           </button>
         )}
 
-          <div className="txHistory">
+          {/* <div className="txHistory">
            {addArr.map(add => <div className="bio">
                 {add} has sent {infArr[addArr.indexOf(add)]} infinities
-          </div>)}
+          </div>)} */}
 
 
-      </div>
+      {/* </div> */}
         
       </div>
       
