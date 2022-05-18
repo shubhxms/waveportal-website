@@ -84,7 +84,7 @@ export default function App() {
         // setAddArr(dataArr[0]);
         // setInfArr(dataArr[1]);
 
-        await updateData();
+        // await updateData();
 
         
       }else{
@@ -164,9 +164,9 @@ export default function App() {
   //   }
   // }
   
-  if(count === 0 && addArr.length === 0){
-    updateData();
-  }
+  // if(count === 0 && addArr.length === 0){
+  //   updateData();
+  // }
 
   return (
     <div className="mainContainer">
