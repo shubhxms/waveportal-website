@@ -194,7 +194,7 @@ export default function App() {
 
         <button className="waveButton" onClick={() =>
         msg !== '' ?
-          alert("please add some message") : wave(msg)}>
+          wave(msg) : alert("please add some message") }>
           send infinities ∞
         </button>
         {!currentAccount && (
