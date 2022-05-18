@@ -149,7 +149,7 @@ export default function App() {
         </div>
 
         <div className="bio">
-        ∞∞∞ I am shubham and I am pretty cool. Connect your Ethereum wallet and send infinities at me! we are, after all, at the  beginning of infinity ∞∞∞
+        ∞∞∞ <br/> I am <a href="https://twitter.com/shubhxms">shubham</a> and I am pretty cool.<br/>Connect your Ethereum wallet and send infinities at me!<br/> ∞∞∞
         </div>
 
         
@@ -170,6 +170,8 @@ export default function App() {
            {addArr.map(add => <div className="bio">
                 {add} has sent {infArr[addArr.indexOf(add)]} infinities
           </div>)}
+
+
       </div>
         
       </div>
