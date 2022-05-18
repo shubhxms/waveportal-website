@@ -8,7 +8,7 @@ export default function App() {
   const [currentAccount, setCurrentAccount] = useState("");
   const [addArr, setAddArr] = useState([]);
   const [infArr, setInfArr] = useState([]);
-  const [count, setCount] = useState("");
+  const [count, setCount] = useState(0);
   const contractAddress = "0x61330a4923C0863b1a3c15F509C63EAf6FB05e75";
   const contractABI = abi.abi;
   
@@ -127,6 +127,7 @@ export default function App() {
     }
   }
   
+  updateData();
 
   return (
     <div className="mainContainer">
