@@ -162,7 +162,7 @@ export default function App() {
       
       {addArr && infArr &&
       <div className="txHistory">
-           {addArr.forEach(add => <div className="bio">
+           {addArr.map(add => <div className="bio">
                 {add} has sent {infArr[addArr.indexOf(add)]} infinities
              </div>)}
       </div>}
