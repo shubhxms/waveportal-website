@@ -110,7 +110,7 @@ export default function App() {
         let tempCount;
         tempCount = await InfPortalContract.getTotalInf();
         setCount(tempCount);
-        console.log("Retrieved total inf count", count.toNumber());
+        console.log("Retrieved total inf count", count);
 
         let dataArr;
         dataArr = await InfPortalContract.getData();
