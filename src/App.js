@@ -8,7 +8,7 @@ export default function App() {
   const [currentAccount, setCurrentAccount] = useState("");
   const [addArr, setAddArr] = useState([]);
   const [infArr, setInfArr] = useState([]);
-  const contractAddress = "0x02A32aE0C86d37903E7969AEf36A68381298d238";
+  const contractAddress = "0x61330a4923C0863b1a3c15F509C63EAf6FB05e75";
   const contractABI = abi.abi;
   let count;
   
