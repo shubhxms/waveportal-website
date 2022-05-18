@@ -8,7 +8,7 @@ export default function App() {
   const [currentAccount, setCurrentAccount] = useState("");
   const [addArr, setAddArr] = useState([]);
   const [infArr, setInfArr] = useState([]);
-  const contractAddress = "0x7C8DE3B9DdF57495285c6ceb389c1740b77920f0";
+  const contractAddress = "0x02A32aE0C86d37903E7969AEf36A68381298d238";
   const contractABI = abi.abi;
   let count;
   
@@ -75,7 +75,7 @@ export default function App() {
         let dataArr;
         // console.log(await InfPortalContract.getData());
         dataArr = await InfPortalContract.getData();
-        console.log(dataArr)
+        console.log(dataArr);
         setAddArr(dataArr[0]);
         setInfArr(dataArr[1]);
 
