@@ -117,6 +117,7 @@ export default function App() {
           });
         });
         setAllWaves(wavesCleaned);
+        setCount(allWaves.length);
       }else{
         console.log("ethereum obj DNE");
       }
@@ -208,6 +209,13 @@ export default function App() {
                 {add} has sent {infArr[addArr.indexOf(add)]} infinities
           </div>)} */}
 
+          <div>
+            {allWaves.forEach(wave => {
+              <div>
+                {wave.waver} said {wave.message} at {wave.timestamp}
+              </div>
+            })}
+          </div>
 
       {/* </div> */}
         
