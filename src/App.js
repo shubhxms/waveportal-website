@@ -73,7 +73,6 @@ export default function App() {
         console.log("Retrieved total inf count", count.toNumber());
 
         let dataArr;
-        // console.log(await InfPortalContract.getData());
         dataArr = await InfPortalContract.getData();
         console.log(dataArr);
         setAddArr(dataArr[0]);
