@@ -210,11 +210,11 @@ export default function App() {
           </div>)} */}
 
           <div>
-            {allWaves.forEach(wave => {
+            {allWaves.forEach(wave => (
               <div>
                 {wave.waver} said {wave.message} at {wave.timestamp}
               </div>
-            })}
+            ))}
           </div>
 
       {/* </div> */}
