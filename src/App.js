@@ -12,9 +12,7 @@ export default function App() {
   const contractAddress = "0x61330a4923C0863b1a3c15F509C63EAf6FB05e75";
   const contractABI = abi.abi;
   
-  useEffect(() => {
-    
-  })
+
   
   const checkIfWalletConnected = async () => {
     try{
@@ -64,7 +62,8 @@ export default function App() {
         const signer = provider.getSigner();
         const InfPortalContract = new ethers.Contract(contractAddress, contractABI, signer);
 
-        count = await InfPortalContract.getTotalInf();
+        let tempCount = await InfPortalContract.getTotalInf();
+        setCount(parseInt(tempCount["_hex"]));
         console.log("total infinities rcvd so far: ", count);
 
         const infTxn = await InfPortalContract.inf();
@@ -82,7 +81,7 @@ export default function App() {
         // setAddArr(dataArr[0]);
         // setInfArr(dataArr[1]);
 
-        updateData();
+        await updateData();
 
         
       }else{
@@ -109,18 +108,24 @@ export default function App() {
 
         let tempCount;
         tempCount = await InfPortalContract.getTotalInf();
-        setCount(tempCount);
+        setCount(parseInt(tempCount["_hex"]));
         console.log("Retrieved total inf count", count);
 
+        console.log("count: ",count);
         let dataArr;
         dataArr = await InfPortalContract.getData();
         console.log(dataArr);
         setAddArr(dataArr[0]);
         let tempInfArr = [];
         for(let i = 0; i< dataArr[1].length; i++){
-          tempInfArr.push(dataArr[1][i]["value"]);
+          console.log(dataArr[1]);
+          console.log(dataArr[1][i]);
+          console.log(parseInt(dataArr[1][i]["_hex"]));
+          tempInfArr.push(parseInt(dataArr[1][i]["_hex"]));
+          console.log(tempInfArr);
         }
-        setInfArr(dataArr[1]);
+        console.log(tempInfArr)
+        setInfArr(tempInfArr);
 
       }else{
         console.log("ethereum obj DNE");
@@ -131,7 +136,9 @@ export default function App() {
     }
   }
   
-  updateData();
+  if(count === 0 && addArr.length === 0){
+    updateData();
+  }
 
   return (
     <div className="mainContainer">
@@ -145,10 +152,10 @@ export default function App() {
         ∞∞∞ I am shubham and I am pretty cool. Connect your Ethereum wallet and send infinities at me! we are, after all, at the  beginning of infinity ∞∞∞
         </div>
 
-        {count &&
+        
         <div className="bio">
           {count} infinities received so far
-        </div>}
+        </div>
       
         <button className="waveButton" onClick={wave}>
           send infinities ∞
@@ -158,14 +165,17 @@ export default function App() {
             connect wallet
           </button>
         )}
+
+          <div className="txHistory">
+           {addArr.map(add => <div className="bio">
+                {add} has sent {infArr[addArr.indexOf(add)]} infinities
+          </div>)}
+      </div>
+        
       </div>
       
-      {addArr && infArr &&
-      <div className="txHistory">
-           {addArr.map(add => <div className="bio">
-                {add} has sent {infArr[addArr.indexOf(add)]["value"]} infinities
-             </div>)}
-      </div>}
+      
+     
       
     </div>
   );
