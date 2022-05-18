@@ -11,7 +11,7 @@ export default function App() {
   // const [infArr, setInfArr] = useState([]);
   const [count, setCount] = useState(0);
   const [allWaves, setAllWaves] = useState([]);
-  const contractAddress = "0x885A82AE5a29fa553f975bBC7604c0706cC32C80";
+  const contractAddress = "0x982C33e4670773E8beE6855f393e070a0Ad08B95";
   const contractABI = abi.abi;
   
 
