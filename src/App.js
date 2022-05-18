@@ -163,7 +163,7 @@ export default function App() {
       {addArr && infArr &&
       <div className="txHistory">
            {addArr.map(add => <div className="bio">
-                {add} has sent {infArr[addArr.indexOf(add)]} infinities
+                {add} has sent {infArr[addArr.indexOf(add)]["value"]} infinities
              </div>)}
       </div>}
       
