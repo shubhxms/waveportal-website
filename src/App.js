@@ -116,6 +116,10 @@ export default function App() {
         dataArr = await InfPortalContract.getData();
         console.log(dataArr);
         setAddArr(dataArr[0]);
+        let tempInfArr;
+        for(let i = 0; i< dataArr[1].length; i++){
+          tempInfArr.push(dataArr[1][i]["value"]);
+        }
         setInfArr(dataArr[1]);
 
       }else{
