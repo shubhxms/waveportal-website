@@ -8,9 +8,13 @@ export default function App() {
   const [currentAccount, setCurrentAccount] = useState("");
   const [addArr, setAddArr] = useState([]);
   const [infArr, setInfArr] = useState([]);
+  const [count, setCount] = useState("");
   const contractAddress = "0x61330a4923C0863b1a3c15F509C63EAf6FB05e75";
   const contractABI = abi.abi;
-  let count;
+  
+  useEffect(() => {
+    
+  })
   
   const checkIfWalletConnected = async () => {
     try{
@@ -69,15 +73,16 @@ export default function App() {
         await infTxn.wait();
         console.log("mined -- ", infTxn.hash);
 
-        count = await InfPortalContract.getTotalInf();
-        console.log("Retrieved total inf count", count.toNumber());
+        // count = await InfPortalContract.getTotalInf();
+        // console.log("Retrieved total inf count", count.toNumber());
 
-        let dataArr;
-        dataArr = await InfPortalContract.getData();
-        console.log(dataArr);
-        setAddArr(dataArr[0]);
-        setInfArr(dataArr[1]);
+        // let dataArr;
+        // dataArr = await InfPortalContract.getData();
+        // console.log(dataArr);
+        // setAddArr(dataArr[0]);
+        // setInfArr(dataArr[1]);
 
+        updateData();
 
         
       }else{
@@ -92,6 +97,35 @@ export default function App() {
     checkIfWalletConnected();
   }, []);
 
+
+  const updateData = async () => {
+    try{
+      const {ethereum} = window;
+
+      if(ethereum){
+        const provider = new ethers.providers.Web3Provider(ethereum);
+        const signer = provider.getSigner();
+        const InfPortalContract = new ethers.Contract(contractAddress, contractABI, signer);
+
+        let tempCount;
+        tempCount = await InfPortalContract.getTotalInf();
+        setCount(tempCount);
+        console.log("Retrieved total inf count", count.toNumber());
+
+        let dataArr;
+        dataArr = await InfPortalContract.getData();
+        console.log(dataArr);
+        setAddArr(dataArr[0]);
+        setInfArr(dataArr[1]);
+
+      }else{
+        console.log("ethereum obj DNE");
+      }
+      
+    }catch(error){
+      console.log(error);
+    }
+  }
   
 
   return (
