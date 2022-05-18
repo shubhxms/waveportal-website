@@ -9,6 +9,7 @@ export default function App() {
   const [msg, setMsg] = useState('');
   // const [addArr, setAddArr] = useState([]);
   // const [infArr, setInfArr] = useState([]);
+  const [rep, setRep] = useState(0);
   const [count, setCount] = useState(0);
   const [allWaves, setAllWaves] = useState([]);
   const contractAddress = "0x982C33e4670773E8beE6855f393e070a0Ad08B95";
@@ -169,6 +170,11 @@ export default function App() {
   //   updateData();
   // }
 
+  if(allWaves.length === 0 && rep === 0){
+    getAllWaves();
+    setRep(1);
+  }
+  
   return (
     <div className="mainContainer">
 
