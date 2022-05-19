@@ -73,7 +73,15 @@ export default function App() {
         const infTxn = await InfPortalContract.inf(msg);
         console.log("mining", infTxn.hash);
 
-        await infTxn.wait();
+        while(await infTxn.wait()){
+          return(
+            <div>
+              mining block {infTxn.hash}
+              deets at <a href={`https://goerli.etherscan.io/tx/${infTxn.hash}`}>goerli ethescan</a>
+            </div>
+          )
+        }
+
         console.log("mined -- ", infTxn.hash);
 
         // count = await InfPortalContract.getTotalInf();
@@ -218,7 +226,7 @@ export default function App() {
           <div>
             {allWaves.map(wave => (
               <div>
-                {wave.waver} said {wave.message}
+                {wave.addresss} said {wave.message}
                 {console.log(wave)}
               </div>
             ))}
