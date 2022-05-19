@@ -67,9 +67,7 @@ export default function App() {
         const signer = provider.getSigner();
         const InfPortalContract = new ethers.Contract(contractAddress, contractABI, signer);
         
-        let tempCount = await InfPortalContract.getTotalInf();
-        setCount(parseInt(tempCount["_hex"]));
-        console.log("total infinities rcvd so far: ", count);
+        
 
         const infTxn = await InfPortalContract.inf(msg);
         console.log(infTxn);
@@ -119,6 +117,9 @@ export default function App() {
         const signer = provider.getSigner();
         const InfPortalContract = new ethers.Contract(contractAddress, contractABI, signer);
         const waves = await InfPortalContract.getAllWaves();
+        let tempCount = await InfPortalContract.getTotalInf();
+        setCount(parseInt(tempCount["_hex"]));
+        console.log("total infinities rcvd so far: ", count);
         console.log(waves);
         let wavesCleaned = [];
         waves.forEach(wave => {
