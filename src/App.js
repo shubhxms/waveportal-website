@@ -65,12 +65,12 @@ export default function App() {
         const provider = new ethers.providers.Web3Provider(ethereum);
         const signer = provider.getSigner();
         const InfPortalContract = new ethers.Contract(contractAddress, contractABI, signer);
-
+        
         let tempCount = await InfPortalContract.getTotalInf();
         setCount(parseInt(tempCount["_hex"]));
         console.log("total infinities rcvd so far: ", count);
 
-        const infTxn = await InfPortalContract.inf("this is a message");
+        const infTxn = await InfPortalContract.inf(msg);
         console.log("mining", infTxn.hash);
 
         await infTxn.wait();
@@ -218,7 +218,8 @@ export default function App() {
           <div>
             {allWaves.map(wave => (
               <div>
-                {wave.waver} said {wave.message} at {wave.timestamp}
+                {wave.waver} said {wave.message}
+                {console.log(wave.timestamp)}
               </div>
             ))}
           </div>
