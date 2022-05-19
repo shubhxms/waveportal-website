@@ -13,6 +13,7 @@ export default function App() {
   const [count, setCount] = useState(0);
   const [allWaves, setAllWaves] = useState([]);
   const [isTxnGoingOn, setIsTxnGoingOn] = useState(false);
+  const [txnHash, setTxnHash] = useState("");
   const contractAddress = "0x982C33e4670773E8beE6855f393e070a0Ad08B95";
   const contractABI = abi.abi;
   
@@ -72,16 +73,13 @@ export default function App() {
         const infTxn = await InfPortalContract.inf(msg);
         console.log("mining", infTxn.hash);
 
-        while(!infTxn.confirmation){
-          return(
-            <div>
-              mining block {infTxn.hash}
-              deets at <a href={`https://goerli.etherscan.io/tx/${infTxn.hash}`}>goerli ethescan</a>
-              {await infTxn.wait()}
-            </div>
-            )
-            
+
+        if(!infTxn.confirmation){
+          setIsTxnGoingOn(true);
+          setTxnHash(infTxn.hash);
         }
+        await infTxn.wait()
+        setIsTxnGoingOn(false)
         
 
         console.log("mined -- ", infTxn.hash);
@@ -118,8 +116,8 @@ export default function App() {
         const signer = provider.getSigner();
         const InfPortalContract = new ethers.Contract(contractAddress, contractABI, signer);
         const waves = await InfPortalContract.getAllWaves();
-        let tempCount = await InfPortalContract.getTotalInf();
-        setCount(parseInt(tempCount["_hex"]));
+        // let tempCount = await InfPortalContract.getTotalInf();
+        setCount(allWaves.length);
         console.log("total infinities rcvd so far: ", count);
         console.log(waves);
         let wavesCleaned = [];
@@ -236,6 +234,13 @@ export default function App() {
               </div>
             ))}
           </div>
+          {isTxnGoingOn &&
+            <div>
+              mining block {txnHash}
+              deets at <a href={`https://goerli.etherscan.io/tx/${txnHash}`}>goerli ethescan</a>
+            </div>
+            }
+
       {/* </div> */}
         
       </div>
