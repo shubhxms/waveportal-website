@@ -76,14 +76,14 @@ export default function App() {
         setIsTxnGoingOn(true);
         console.log("mining", infTxn.hash);
 
-        if(isTxnGoingOn){
-            <div>
-              mining block {infTxn.hash}
-              deets at <a href={`https://goerli.etherscan.io/tx/${infTxn.hash}`}>goerli ethescan</a>
-            </div>
-        await infTxn.wait()
-        setIsTxnGoingOn(false);
-        }
+        // if(isTxnGoingOn){
+        //     <div>
+        //       mining block {infTxn.hash}
+        //       deets at <a href={`https://goerli.etherscan.io/tx/${infTxn.hash}`}>goerli ethescan</a>
+        //     </div>
+        // await infTxn.wait()
+        // setIsTxnGoingOn(false);
+        // }
         
         console.log("mined -- ", infTxn.hash);
 
