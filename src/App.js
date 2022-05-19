@@ -12,6 +12,7 @@ export default function App() {
   const [rep, setRep] = useState(0);
   const [count, setCount] = useState(0);
   const [allWaves, setAllWaves] = useState([]);
+  const [isTxnGoingOn, setIsTxnGoingOn] = useState(false);
   const contractAddress = "0x982C33e4670773E8beE6855f393e070a0Ad08B95";
   const contractABI = abi.abi;
   
@@ -71,17 +72,19 @@ export default function App() {
         console.log("total infinities rcvd so far: ", count);
 
         const infTxn = await InfPortalContract.inf(msg);
+        console.log(infTxn);
+        setIsTxnGoingOn(true);
         console.log("mining", infTxn.hash);
 
-        while(await infTxn.wait()){
-          return(
+        if(isTxnGoingOn){
             <div>
               mining block {infTxn.hash}
               deets at <a href={`https://goerli.etherscan.io/tx/${infTxn.hash}`}>goerli ethescan</a>
             </div>
-          )
+        await infTxn.wait()
+        setIsTxnGoingOn(false);
         }
-
+        
         console.log("mined -- ", infTxn.hash);
 
         // count = await InfPortalContract.getTotalInf();
@@ -231,7 +234,6 @@ export default function App() {
               </div>
             ))}
           </div>
-          waver
       {/* </div> */}
         
       </div>
