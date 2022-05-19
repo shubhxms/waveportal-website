@@ -70,19 +70,20 @@ export default function App() {
         
 
         const infTxn = await InfPortalContract.inf(msg);
-        console.log(infTxn);
-        setIsTxnGoingOn(true);
         console.log("mining", infTxn.hash);
 
-        // if(isTxnGoingOn){
-        //     <div>
-        //       mining block {infTxn.hash}
-        //       deets at <a href={`https://goerli.etherscan.io/tx/${infTxn.hash}`}>goerli ethescan</a>
-        //     </div>
-        // await infTxn.wait()
-        // setIsTxnGoingOn(false);
-        // }
+        while(!infTxn.confirmation){
+          return(
+            <div>
+              mining block {infTxn.hash}
+              deets at <a href={`https://goerli.etherscan.io/tx/${infTxn.hash}`}>goerli ethescan</a>
+              {await infTxn.wait()}
+            </div>
+            )
+            
+        }
         
+
         console.log("mined -- ", infTxn.hash);
 
         // count = await InfPortalContract.getTotalInf();
