@@ -226,12 +226,12 @@ export default function App() {
           <div>
             {allWaves.map(wave => (
               <div>
-                {wave.addresss} said {wave.message}
+                {wave.address} said {wave.message}
                 {console.log(wave)}
               </div>
             ))}
           </div>
-
+          waver
       {/* </div> */}
         
       </div>
