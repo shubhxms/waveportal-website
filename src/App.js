@@ -219,7 +219,7 @@ export default function App() {
             {allWaves.map(wave => (
               <div>
                 {wave.waver} said {wave.message}
-                {console.log(wave.timestamp)}
+                {console.log(wave)}
               </div>
             ))}
           </div>
