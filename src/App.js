@@ -14,7 +14,7 @@ export default function App() {
   const [allWaves, setAllWaves] = useState([]);
   const [isTxnGoingOn, setIsTxnGoingOn] = useState(false);
   const [txnHash, setTxnHash] = useState("");
-  const contractAddress = "0x982C33e4670773E8beE6855f393e070a0Ad08B95";
+  const contractAddress = "0xb1Af385A1B776D434D57Fd433d38b402a57631ee";
   const contractABI = abi.abi;
   
 
