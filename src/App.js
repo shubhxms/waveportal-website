@@ -127,7 +127,7 @@ export default function App() {
           });
         });
         setAllWaves(wavesCleaned);
-        setCount(allWaves.length);
+        setCount(waves.length);
       }else{
         console.log("ethereum obj DNE");
       }
