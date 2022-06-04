@@ -7,9 +7,6 @@ export default function App() {
 
   const [currentAccount, setCurrentAccount] = useState("");
   const [msg, setMsg] = useState('');
-  // const [addArr, setAddArr] = useState([]);
-  // const [infArr, setInfArr] = useState([]);
-  const [rep, setRep] = useState(0);
   const [count, setCount] = useState(0);
   const [allWaves, setAllWaves] = useState([]);
   const [isTxnGoingOn, setIsTxnGoingOn] = useState(false);
@@ -70,7 +67,7 @@ export default function App() {
         
         
 
-        const infTxn = await InfPortalContract.inf(msg);
+        const infTxn = await InfPortalContract.inf(msg, { gasLimit: 300000 });
         console.log("mining", infTxn.hash);
 
 
@@ -106,6 +103,7 @@ export default function App() {
   
   useEffect(() => {
     checkIfWalletConnected();
+    getAllWaves();
   }, []);
 
   const getAllWaves = async () => {
@@ -138,53 +136,6 @@ export default function App() {
     }
   }
 
-  // const updateData = async () => {
-  //   try{
-  //     const {ethereum} = window;
-
-  //     if(ethereum){
-  //       const provider = new ethers.providers.Web3Provider(ethereum);
-  //       const signer = provider.getSigner();
-  //       const InfPortalContract = new ethers.Contract(contractAddress, contractABI, signer);
-
-  //       let tempCount;
-  //       tempCount = await InfPortalContract.getTotalInf();
-  //       setCount(parseInt(tempCount["_hex"]));
-  //       console.log("Retrieved total inf count", count);
-
-  //       console.log("count: ",count);
-  //       let dataArr;
-  //       dataArr = await InfPortalContract.getData();
-  //       console.log(dataArr);
-  //       setAddArr(dataArr[0]);
-  //       let tempInfArr = [];
-  //       for(let i = 0; i< dataArr[1].length; i++){
-  //         console.log(dataArr[1]);
-  //         console.log(dataArr[1][i]);
-  //         console.log(parseInt(dataArr[1][i]["_hex"]));
-  //         tempInfArr.push(parseInt(dataArr[1][i]["_hex"]));
-  //         console.log(tempInfArr);
-  //       }
-  //       console.log(tempInfArr)
-  //       setInfArr(tempInfArr);
-
-  //     }else{
-  //       console.log("ethereum obj DNE");
-  //     }
-      
-  //   }catch(error){
-  //     console.log(error);
-  //   }
-  // }
-  
-  // if(count === 0 && addArr.length === 0){
-  //   updateData();
-  // }
-
-  if(allWaves.length === 0 && rep === 0){
-    getAllWaves();
-    setRep(1);
-  }
   
   return (
     <div className="mainContainer">
@@ -226,6 +177,13 @@ export default function App() {
                 {add} has sent {infArr[addArr.indexOf(add)]} infinities
           </div>)} */}
 
+          {isTxnGoingOn &&
+            <div>
+              mining block {txnHash}
+              deets at <a href={`https://goerli.etherscan.io/tx/${txnHash}`}>goerli ethescan</a>
+            </div>
+            }
+
           <div>
             {allWaves.map(wave => (
               <div>
@@ -234,12 +192,6 @@ export default function App() {
               </div>
             ))}
           </div>
-          {isTxnGoingOn &&
-            <div>
-              mining block {txnHash}
-              deets at <a href={`https://goerli.etherscan.io/tx/${txnHash}`}>goerli ethescan</a>
-            </div>
-            }
 
       {/* </div> */}
         
